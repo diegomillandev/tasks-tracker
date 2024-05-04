@@ -23,7 +23,7 @@ export const TasksList = () => {
             return acc + task.timer;
         }, 0);
         setTimeTotal(time);
-    }, [TaskList]);
+    }, []);
 
     return (
         <div className="mb-10">
