@@ -1,14 +1,27 @@
 import dayjs from 'dayjs';
 import { cn, months } from '../helpers';
 import { generateDate } from '../utils/calendar';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { useCalendarStore } from '../store/calendar';
 
 export const Calendar = () => {
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    const [today, selectedDate, setToday, setSelectedDate] = useCalendarStore(
+        (state) => [
+            state.today,
+            state.selectedDate,
+            state.setToday,
+            state.setSelectedDate,
+        ]
+    );
     const currentDate = dayjs();
-    const [today, setToday] = useState(currentDate);
-    const [selectedDate, setSelectedDate] = useState(currentDate);
+
+    useEffect(() => {
+        setSelectedDate(currentDate);
+    }, []);
+    // const [today, setToday] = useState(currentDate);
+    // const [selectedDate, setSelectedDate] = useState(currentDate);
     return (
         <div className="w-[98%] bg-[#1e2a36] rounded px-4 pt-4 pb-2 border border-gray-700 mx-auto">
             <div className="flex justify-between">

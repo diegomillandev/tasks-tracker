@@ -2,7 +2,7 @@ import { supabase } from "../supabase";
 import { Task, TaskEdit } from "../types";
 
 export const getUserTasks = async (userId: string | undefined) => {
-        const { data, error } = await supabase.from('tasks').select('*').eq('user_id', userId);
+        const { data, error } = await supabase.from('tasks').select('*').eq('user_id', userId).order('id', { ascending: true });
         if (error) {
             console.error('Error getting user tasks:', error);
             return;
@@ -34,8 +34,7 @@ export const updateTask = async (task: TaskEdit) => {
     }
 };
 
-
-export const updateTaskTimer = async (id: string, timer: number, user_id: string) => {
+export const updateTaskTimer = async ({id, timer, user_id}:{id: number, timer: number, user_id: string}) => {
     const { error } = await supabase
         .from('tasks')
         .update({ timer: timer })

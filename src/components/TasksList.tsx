@@ -5,11 +5,14 @@ import { useEffect, useState } from 'react';
 import useAuthStore from '../store/auth';
 import { useQuery } from '@tanstack/react-query';
 import { getUserTasks } from '../services/supabse.service';
+import { useCalendarStore } from '../store/calendar';
+import { TaskEdit } from '../types';
 
 export const TasksList = () => {
     const [timeTotal, setTimeTotal] = useState(0);
     const [userSession] = useAuthStore((state) => [state.userSession]);
     const [setShowModal] = useEventStore((state) => [state.setShowModal]);
+    const [selectedDate] = useCalendarStore((state) => [state.selectedDate]);
 
     const userId = userSession?.user?.id;
 
@@ -18,14 +21,24 @@ export const TasksList = () => {
         queryFn: () => getUserTasks(userId),
     });
 
+    const listTasks = data as TaskEdit[];
+
+    const filterTasks = listTasks?.filter((task) => {
+        return (
+            new Date(task.created_at).getDate() === selectedDate.date() &&
+            new Date(task.created_at).getMonth() === selectedDate.month() &&
+            new Date(task.created_at).getFullYear() === selectedDate.year()
+        );
+    });
+
     useEffect(() => {
-        if (data) {
-            const total = data.reduce((acc, task) => {
+        if (filterTasks) {
+            const total = filterTasks.reduce((acc, task) => {
                 return acc + task.timer;
             }, 0);
             setTimeTotal(total);
         }
-    }, [data]);
+    }, [filterTasks]);
 
     return (
         <div className="mb-10">
@@ -72,8 +85,8 @@ export const TasksList = () => {
             </div>
             <ul className="space-y-2 h-[620px] overflow-y-auto no-scrollbar">
                 {isLoading && <LoadingTasks />}
-                {data?.length !== 0 ? (
-                    data?.map((task) => {
+                {filterTasks?.length !== 0 ? (
+                    filterTasks?.map((task) => {
                         return <Task key={task.id} task={task} />;
                     })
                 ) : (

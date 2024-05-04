@@ -3,7 +3,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { GrMore } from 'react-icons/gr';
 import { TaskEdit } from '../types/index';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteTask } from '../services/supabse.service';
+import { deleteTask, updateTaskTimer } from '../services/supabse.service';
 import { useTaskStore } from '../store/tasks';
 import { useEventStore } from '../store/events';
 
@@ -15,7 +15,7 @@ export const Task = ({ task }: { task: TaskEdit }) => {
 
     useEffect(() => {
         setTimer(task.timer);
-    }, []);
+    }, [task]);
 
     useEffect(() => {
         let interval: number | undefined;
@@ -35,15 +35,17 @@ export const Task = ({ task }: { task: TaskEdit }) => {
         };
     }, [isRunning]);
 
-    useEffect(() => {
-        if (!isRunning && timer > 0) {
-            console.log('task', task.id, 'stopped at', timer);
-        }
-    }, [isRunning]);
-
     const queryClient = useQueryClient();
     const mutationDelete = useMutation({
         mutationFn: deleteTask,
+        onError: () => {},
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+        },
+    });
+
+    const mutationTimer = useMutation({
+        mutationFn: updateTaskTimer,
         onError: () => {},
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -57,6 +59,16 @@ export const Task = ({ task }: { task: TaskEdit }) => {
     const handleEdit = () => {
         setEditTask(task);
         setShowModal(true);
+    };
+
+    const handleTimer = () => {
+        setIsRunning((prev) => !prev);
+        if (!isRunning) return;
+        mutationTimer.mutate({
+            id: +task.id,
+            timer: timer,
+            user_id: task.user_id,
+        });
     };
     return (
         <li className="border relative rounded shadow bg-gray-800 border-gray-700 p-4">
@@ -108,22 +120,22 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                 <div className="flex gap-3">
                     <button
                         className={`${
-                            isRunning
-                                ? 'bg-red-600 hover:bg-red-700'
-                                : 'bg-blue-600 hover:bg-blue-700'
-                        } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
-                        onClick={() => setIsRunning(!isRunning)}
-                    >
-                        {isRunning ? 'Stop' : 'Start'}
-                    </button>
-                    <button
-                        className={`${
-                            task.timer === 0
+                            timer === 0
                                 ? 'hidden'
                                 : 'block bg-green-600 hover:bg-green-700'
                         } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
                     >
                         {task.done ? 'Done' : 'Finish'}
+                    </button>
+                    <button
+                        className={`${
+                            isRunning
+                                ? 'bg-red-600 hover:bg-red-700'
+                                : 'bg-blue-600 hover:bg-blue-700'
+                        } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
+                        onClick={handleTimer}
+                    >
+                        {isRunning ? 'Stop' : 'Start'}
                     </button>
                 </div>
             </div>
