@@ -38,7 +38,7 @@ export const TasksList = () => {
             }, 0);
             setTimeTotal(total);
         }
-    }, [filterTasks]);
+    }, []);
 
     return (
         <div className="mb-10">

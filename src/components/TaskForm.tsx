@@ -191,7 +191,8 @@ export const TaskForm = () => {
                         disabled={isFormDisabled}
                     />
                 </div>
-                <div className="">
+
+                <div>
                     <button
                         className="p-3 bg-blue-600 text-white hover:bg-blue-700 rounded font-medium flex items-center gap-x-2 transition-colors w-full justify-center 
                         disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-blue-800 disabled:hover:bg-blue-800

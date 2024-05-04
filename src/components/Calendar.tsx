@@ -20,8 +20,6 @@ export const Calendar = () => {
     useEffect(() => {
         setSelectedDate(currentDate);
     }, []);
-    // const [today, setToday] = useState(currentDate);
-    // const [selectedDate, setSelectedDate] = useState(currentDate);
     return (
         <div className="w-[98%] bg-[#1e2a36] rounded px-4 pt-4 pb-2 border border-gray-700 mx-auto">
             <div className="flex justify-between">
@@ -37,7 +35,7 @@ export const Calendar = () => {
                     />
                     <p
                         className="cursor-pointer capitalize text-lg"
-                        onClick={() => setToday(currentDate)}
+                        onClick={() => setSelectedDate(currentDate)}
                     >
                         today
                     </p>
