@@ -19,7 +19,10 @@ const useAuthStore = create<AuthStore>((set) => ({
         try {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'github',
-                options: { redirectTo: 'https://tasks-tracker-millandev.netlify.app' },
+                options: { redirectTo: 'https://tasks-tracker-millandev.netlify.app', queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                  } },
             });
             if (error) {
                 throw new Error(
@@ -34,7 +37,10 @@ const useAuthStore = create<AuthStore>((set) => ({
         try {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
-                options: { redirectTo: 'https://tasks-tracker-millandev.netlify.app' },
+                options: { redirectTo: 'https://tasks-tracker-millandev.netlify.app', queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                  },},
             });
             if (error) {
                 throw new Error(
