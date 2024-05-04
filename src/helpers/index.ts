@@ -1,4 +1,4 @@
-export const cn = (...args) => {
+export const cn = (...args:  Array<string | number | boolean | undefined | null>) => {
     return args.filter(Boolean).join(' ');
 };
 

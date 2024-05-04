@@ -120,15 +120,6 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                 <div className="flex gap-3">
                     <button
                         className={`${
-                            timer === 0
-                                ? 'hidden'
-                                : 'block bg-green-600 hover:bg-green-700'
-                        } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
-                    >
-                        {task.done ? 'Done' : 'Finish'}
-                    </button>
-                    <button
-                        className={`${
                             isRunning
                                 ? 'bg-red-600 hover:bg-red-700'
                                 : 'bg-blue-600 hover:bg-blue-700'
@@ -136,6 +127,15 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                         onClick={handleTimer}
                     >
                         {isRunning ? 'Stop' : 'Start'}
+                    </button>
+                    <button
+                        className={`${
+                            timer === 0
+                                ? 'hidden'
+                                : 'block bg-green-600 hover:bg-green-700'
+                        } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
+                    >
+                        Done
                     </button>
                 </div>
             </div>

@@ -34,7 +34,7 @@ export const TasksList = () => {
         });
     }, [listTasks, selectedDate]);
 
-    const fnTotalTime = () => {
+    useEffect(() => {
         if (filterTasks) {
             const total = filterTasks.reduce(
                 (acc, task) => acc + task.timer,
@@ -44,11 +44,7 @@ export const TasksList = () => {
                 setTimeTotal(total);
             }
         }
-    };
-
-    useEffect(() => {
-        fnTotalTime();
-    }, [filterTasks]);
+    }, [filterTasks, timeTotal]);
 
     return (
         <div className="mb-10">
