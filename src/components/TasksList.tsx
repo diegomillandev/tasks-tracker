@@ -1,7 +1,7 @@
 import { GrAdd } from 'react-icons/gr';
 import { LoadingTasks, Task } from '.';
 import { useEventStore } from '../store/events';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useAuthStore from '../store/auth';
 import { useQuery } from '@tanstack/react-query';
 import { getUserTasks } from '../services/supabse.service';
@@ -23,22 +23,32 @@ export const TasksList = () => {
 
     const listTasks = data as TaskEdit[];
 
-    const filterTasks = listTasks?.filter((task) => {
-        return (
-            new Date(task.created_at).getDate() === selectedDate.date() &&
-            new Date(task.created_at).getMonth() === selectedDate.month() &&
-            new Date(task.created_at).getFullYear() === selectedDate.year()
-        );
-    });
+    const filterTasks = useMemo(() => {
+        return listTasks?.filter((task) => {
+            const createdAt = new Date(task.created_at);
+            return (
+                createdAt.getDate() === selectedDate.date() &&
+                createdAt.getMonth() === selectedDate.month() &&
+                createdAt.getFullYear() === selectedDate.year()
+            );
+        });
+    }, [listTasks, selectedDate]);
+
+    const fnTotalTime = () => {
+        if (filterTasks) {
+            const total = filterTasks.reduce(
+                (acc, task) => acc + task.timer,
+                0
+            );
+            if (total !== timeTotal) {
+                setTimeTotal(total);
+            }
+        }
+    };
 
     useEffect(() => {
-        if (filterTasks) {
-            const total = filterTasks.reduce((acc, task) => {
-                return acc + task.timer;
-            }, 0);
-            setTimeTotal(total);
-        }
-    }, []);
+        fnTotalTime();
+    }, [filterTasks]);
 
     return (
         <div className="mb-10">
