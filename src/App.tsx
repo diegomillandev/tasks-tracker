@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { AppRouter } from './route';
 import { supabase } from './supabase';
 import useAuthStore from './store/auth';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export const App = () => {
     const setUserSession = useAuthStore((state) => state.setUserSession);
-
+    const queryClient = new QueryClient();
     useEffect(() => {
         const fetchUserSession = async () => {
             try {
@@ -17,6 +18,9 @@ export const App = () => {
         };
         fetchUserSession();
     }, [setUserSession]);
-
-    return <AppRouter />;
+    return (
+        <QueryClientProvider client={queryClient}>
+            <AppRouter />
+        </QueryClientProvider>
+    );
 };

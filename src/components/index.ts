@@ -2,6 +2,7 @@ export * from './Calendar';
 export * from './IconGithub';
 export * from './IconGoogle';
 export * from './Loading';
+export * from './LoadingTasks';
 export * from './Logo';
 export * from './NavbarHeader';
 export * from './Task';

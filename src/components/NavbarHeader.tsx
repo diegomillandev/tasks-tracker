@@ -58,14 +58,6 @@ export const NavbarHeader = () => {
                                 Tasks
                             </Link>
                         </li>
-                        <li>
-                            <Link
-                                to={'/user/edit-profile'}
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                                Profile
-                            </Link>
-                        </li>
                     </ul>
                     <hr className="bg-gray-700" />
                     <div className="">

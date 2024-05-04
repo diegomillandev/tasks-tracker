@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { GrMore } from 'react-icons/gr';
-import { Taskdb } from '../types/index';
+import { TaskEdit } from '../types/index';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteTask } from '../services/supabse.service';
 import { useTaskStore } from '../store/tasks';
+import { useEventStore } from '../store/events';
 
-export const Task = ({ task }: { task: Taskdb }) => {
-    const [setTimerTask, getTasksById, deleteTask] = useTaskStore((state) => [
-        state.setTimerTask,
-        state.getTasksById,
-        state.deleteTask,
-    ]);
+export const Task = ({ task }: { task: TaskEdit }) => {
+    const [setShowModal] = useEventStore((state) => [state.setShowModal]);
+    const [setEditTask] = useTaskStore((state) => [state.setEditTask]);
     const [isRunning, setIsRunning] = useState(false);
     const [timer, setTimer] = useState(0);
 
@@ -37,14 +37,26 @@ export const Task = ({ task }: { task: Taskdb }) => {
 
     useEffect(() => {
         if (!isRunning && timer > 0) {
-            setTimerTask(task.id, timer, task.user_id);
-            getTasksById(task.user_id);
+            console.log('task', task.id, 'stopped at', timer);
         }
     }, [isRunning]);
 
+    const queryClient = useQueryClient();
+    const mutationDelete = useMutation({
+        mutationFn: deleteTask,
+        onError: () => {},
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+        },
+    });
+
     const handleDelete = () => {
-        deleteTask(task.id);
-        getTasksById(task.user_id);
+        mutationDelete.mutate(+task.id);
+    };
+
+    const handleEdit = () => {
+        setEditTask(task);
+        setShowModal(true);
     };
     return (
         <li className="border relative rounded shadow bg-gray-800 border-gray-700 p-4">
@@ -56,17 +68,20 @@ export const Task = ({ task }: { task: Taskdb }) => {
                     <GrMore className="text-2xl text-gray-200" />
                     <div className="absolute hidden group-hover:block right-0 w-36">
                         <ul className="border top-0 shadow bg-gray-800 border-gray-700 p-2 rounded">
-                            <li className="text-gray-200 font-extralight hover:bg-slate-600 p-1 rounded flex items-center gap-3 ps-2">
+                            <li
+                                className="text-gray-200 font-extralight hover:bg-slate-600 p-1 rounded flex items-center gap-3 ps-2"
+                                onClick={handleEdit}
+                            >
                                 <FaEdit className="text-xl" />
                                 Edit
                             </li>
-                            <button
+                            <li
                                 className="text-gray-200 font-extralight hover:bg-slate-600 p-1 rounded flex items-center gap-3 ps-2"
                                 onClick={handleDelete}
                             >
                                 <FaTrash className="text-xl" />
                                 Delete
-                            </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
