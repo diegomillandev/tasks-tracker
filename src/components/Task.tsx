@@ -70,6 +70,20 @@ export const Task = ({ task }: { task: TaskEdit }) => {
             user_id: task.user_id,
         });
     };
+
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (isRunning) {
+                e.preventDefault();
+                return 'Are you sure you want to leave?';
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [isRunning]);
     return (
         <li className="border relative rounded shadow bg-gray-800 border-gray-700 p-4">
             <header>
@@ -127,15 +141,6 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                         onClick={handleTimer}
                     >
                         {isRunning ? 'Stop' : 'Start'}
-                    </button>
-                    <button
-                        className={`${
-                            timer === 0
-                                ? 'hidden'
-                                : 'block bg-green-600 hover:bg-green-700'
-                        } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
-                    >
-                        Done
                     </button>
                 </div>
             </div>

@@ -24,7 +24,6 @@ const useAuthStore = create<AuthStore>((set) => ({
                         access_type: 'offline',
                         prompt: 'consent',
                     }, 
-                    redirectTo: 'https://tasks-tracker-eight.vercel.app',
                 },
             });
             if (error) {
@@ -45,7 +44,7 @@ const useAuthStore = create<AuthStore>((set) => ({
                         access_type: 'offline',
                         prompt: 'consent',                   
                     },
-                    redirectTo: 'https://tasks-tracker-eight.vercel.app',
+                    
                 },
             });
             if (error) {
