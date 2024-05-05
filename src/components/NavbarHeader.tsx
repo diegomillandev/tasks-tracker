@@ -14,6 +14,9 @@ export const NavbarHeader = () => {
         navigate('/login', { replace: true });
     };
 
+    const sliceName = (name: string) => {
+        return name.split(' ')[0] + ' ' + name.split(' ')[2][0] + '.';
+    };
     const user = userSession?.user.user_metadata;
     return (
         <div className="bg-[#1e2a36] text-white flex py-2 justify-between px-3 sticky top-0 z-50 border-b border-gray-700">
@@ -44,7 +47,9 @@ export const NavbarHeader = () => {
                 right-2 hidden group-hover:block overflow-hidden"
                 >
                     <div className="flex flex-col px-4 py-2 md:hidden">
-                        <p className="text-sm capitalize">{`${user?.full_name}`}</p>
+                        <p className="text-sm capitalize">{`${sliceName(
+                            user?.full_name
+                        )}`}</p>
                         <p className="text-xs text-zinc-500">
                             {`${user?.email}`}
                         </p>
