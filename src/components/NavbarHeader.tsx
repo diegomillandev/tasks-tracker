@@ -15,7 +15,10 @@ export const NavbarHeader = () => {
     };
 
     const sliceName = (name: string) => {
-        return name.split(' ')[0] + ' ' + name.split(' ')[2][0] + '.';
+        const nameArray = name.split(' ');
+        return nameArray.length > 1
+            ? `${nameArray[0]} ${nameArray[1]}`
+            : nameArray[0];
     };
     const user = userSession?.user.user_metadata;
     return (
