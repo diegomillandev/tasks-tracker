@@ -48,13 +48,13 @@ export const TasksList = () => {
 
     return (
         <div className="mb-10">
-            <div className="mb-5 bg-gray-900">
-                <header className="text-white  font-bold bg-[#1e2a36] p-3 rounded flex items-center justify-between">
+            <div className="mb-5 bg-transparent">
+                <header className="text-white border border-[#4a5662]  bg-[#1e2a36] font-bold p-3 rounded flex items-center justify-between">
                     <h2 className="text-xl md:text-2xl">Task List</h2>
 
                     <button
                         onClick={() => setShowModal(true)}
-                        className="p-3 bg-blue-600 hover:bg-blue-700 rounded font-medium flex items-center gap-x-2 transition-colors"
+                        className="p-3 bg-[#005ad1] hover:bg-blue-700 rounded font-medium flex items-center gap-x-2 transition-colors"
                     >
                         <GrAdd />
                         Add Task
@@ -65,7 +65,7 @@ export const TasksList = () => {
                     <h3 className="text-white my-4 text-2xl font-bold">
                         To Do&apos;s
                     </h3>
-                    <div className="bg-[#1e2a36] text-white p-2 flex gap-2 rounded">
+                    <div className="border border-[#4a5662]  bg-[#354250] text-white p-2 flex gap-2 rounded">
                         <p>Total time:</p>
                         <p className="text-gray-400">
                             <span>
@@ -97,7 +97,7 @@ export const TasksList = () => {
                     })
                 ) : (
                     <div
-                        className="w-1/2 mx-auto flex items-center p-4 mb-4 text-md text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                        className="w-4/6 md:w-2/3 lg:w-3/6 md:max-w-56 mx-auto flex items-center p-4 mb-4 text-md text-blue-800 rounded-lg bg-blue-50 dark:bg-[#005ad1] dark:text-white"
                         role="alert"
                     >
                         <svg

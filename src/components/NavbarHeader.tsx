@@ -1,20 +1,20 @@
 import { BiTask } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/auth';
+import { signOut } from '../services/auth.service';
+import { UserInfo } from '../types';
 
 export const NavbarHeader = () => {
+    const [userSession] = useAuthStore((state) => [state.userSession]);
     const navigate = useNavigate();
-    const [userSession, handleLogout] = useAuthStore((state) => [
-        state.userSession,
-        state.handleLogout,
-    ]);
 
     const handleLogoutUser = async () => {
-        await handleLogout();
+        await signOut();
         navigate('/login', { replace: true });
     };
 
-    const user = userSession?.user.user_metadata;
+    const user: UserInfo = userSession?.user.user_metadata as UserInfo;
+    console.log(user);
     return (
         <div className="bg-[#1e2a36] text-white flex py-2 justify-between px-6 sticky top-0 z-50 border-b border-gray-700">
             <div className="flex items-center select-none">
@@ -24,15 +24,15 @@ export const NavbarHeader = () => {
 
             <div className="relative group cursor-pointer p-2">
                 <div className="flex gap-x-2">
-                    <div className="w-10 h-10 font-extralight bg-gray-900 rounded-full flex justify-center items-center">
+                    <div className="w-10 h-10 font-extralight border border-gray-700 bg-gray-900 rounded-full flex justify-center items-center">
                         <img
-                            src={`${user?.avatar_url}`}
+                            src={`/icon_user.svg`}
                             alt="avatar"
                             className="w-10 h-10 rounded-full"
                         />
                     </div>
                     <div className="hidden md:block">
-                        <p className="text-sm capitalize">{`${user?.full_name}`}</p>
+                        <p className="text-sm capitalize">{`${user?.first_name} ${user?.last_name}`}</p>
                         <p className="text-xs text-zinc-400">
                             {`${user?.email}`}
                         </p>
@@ -40,11 +40,11 @@ export const NavbarHeader = () => {
                 </div>
 
                 <div
-                    className="absolute z-10 font-normal rounded shadow w-[15rem] bg-gray-700 divide-gray-600 top-[95%]
+                    className="absolute z-10 font-normal rounded shadow w-[12rem] bg-gray-700 divide-gray-600 top-[95%]
                 right-2 hidden group-hover:block overflow-hidden"
                 >
                     <div className="flex flex-col px-4 py-2 md:hidden">
-                        <p className="text-sm capitalize">{`${user?.full_name}`}</p>
+                        <p className="text-sm capitalize">{`${user?.first_name} ${user?.last_name}`}</p>
                         <p className="text-xs text-zinc-500">
                             {`${user?.email}`}
                         </p>

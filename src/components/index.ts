@@ -4,6 +4,7 @@ export * from './IconGoogle';
 export * from './Loading';
 export * from './LoadingTasks';
 export * from './Logo';
+export * from './MessageInputsError';
 export * from './NavbarHeader';
 export * from './Task';
 export * from './TaskForm';
