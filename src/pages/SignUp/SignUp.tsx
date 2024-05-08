@@ -114,7 +114,7 @@ export const SignUp = () => {
                             id="email"
                             className="w-full p-2 mt-1 bg-gray-700 focus:outline-none focus:ring-2 rounded
                         focus:ring-blue-600 focus:border-transparent text-white placeholder:text-gray-600 placeholder:font-extralight disabled:cursor-not-allowed disabled:bg-gray-500"
-                            placeholder="diego.millan@company.com"
+                            placeholder="millandev@company.com"
                             {...register('email', {
                                 required: 'Email is required',
                                 pattern: {

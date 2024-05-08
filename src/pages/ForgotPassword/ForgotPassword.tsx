@@ -62,7 +62,7 @@ export const ForgotPassword = () => {
                                focus:ring-blue-600 focus:border-transparent text-white 
                                placeholder:font-extralight  placeholder:text-gray-600
                                "
-                                    placeholder="diego.millan@company.com"
+                                    placeholder="millandev@company.com"
                                     {...register('email', {
                                         required: 'Email is required',
                                         pattern: {
