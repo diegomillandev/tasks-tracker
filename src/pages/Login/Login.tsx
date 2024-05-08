@@ -1,4 +1,4 @@
-import { BiHide, BiShow, BiTask } from 'react-icons/bi';
+import { BiHide, BiShow } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router-dom';
 import { PublicRoutes } from '../../models';
 import { useShowPassword } from '../../hooks';
@@ -33,33 +33,32 @@ export const Login = () => {
 
     return (
         <div className="flex pt-10 md:pt-24 pb-10 md:pb-0 items-center min-h-screen flex-col">
-            <div className="flex items-center select-none mb-5 md:mb-10">
-                <BiTask className="text-4xl md:text-5xl" />
-                <h1 className="text-3xl md:text-5xl font-medium">
-                    TaskTracker
-                </h1>
-            </div>
             <form
-                className="bg-gray-800 p-6 w-11/12 max-w-[450px] rounded-md border border-gray-700"
+                className="bg-gray-800 p-8 w-11/12 max-w-[450px] rounded-md border border-gray-700"
                 autoComplete="off"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <h2 className="text-xl md:text-2xl font-medium text-gray-900 dark:text-white mb-6">
-                    Sign in to your account
+                <h2 className="text-xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                    TaskTracker
+                    <span className="block text-lg font-extralight">
+                        Sign in
+                    </span>
                 </h2>
                 <div className="mb-6 relative">
                     <label
                         htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-1 text-sm font-normal text-gray-900 dark:text-white"
                     >
-                        Email address
+                        Your email
                     </label>
                     <input
                         type="email"
                         id="email"
                         className="w-full p-2 mt-1 bg-gray-700 focus:outline-none focus:ring-2 rounded
-                        focus:ring-blue-600 focus:border-transparent text-white placeholder:text-gray-400"
-                        placeholder="john.doe@company.com"
+                        focus:ring-blue-600 focus:border-transparent text-white 
+                        placeholder:font-extralight  placeholder:text-gray-600
+                        "
+                        placeholder="diego.millan@company.com"
                         {...register('email', {
                             required: 'Email is required',
                             pattern: {
@@ -74,10 +73,10 @@ export const Login = () => {
                         </MessageInputsError>
                     )}
                 </div>
-                <div className="mb-8 relative">
+                <div className="mb-4 relative">
                     <label
                         htmlFor="password"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2 text-sm font-normal text-gray-900 dark:text-white"
                     >
                         Password
                     </label>
@@ -85,7 +84,7 @@ export const Login = () => {
                         type={showPassword ? 'text' : 'password'}
                         id="password"
                         className="w-full p-2 mt-1 bg-gray-700 focus:outline-none focus:ring-2 rounded
-                        focus:ring-blue-600 focus:border-transparent text-white placeholder:text-gray-400"
+                        focus:ring-blue-600 focus:border-transparent text-white placeholder:text-gray-600"
                         placeholder="•••••••••"
                         {...register('password', {
                             required: 'Password is required',
@@ -112,14 +111,23 @@ export const Login = () => {
                         </MessageInputsError>
                     )}
                 </div>
+
+                <p className="text-gray-400 mb-4 text-right">
+                    <Link
+                        to={`/${PublicRoutes.FORGOT_PASSWORD}`}
+                        className="text-blue-600 hover:underline text-sm"
+                    >
+                        Forgot password?
+                    </Link>
+                </p>
                 <button
                     type="submit"
-                    className="p-3 bg-blue-600 text-white hover:bg-blue-700 rounded font-medium flex items-center gap-x-2 transition-colors w-full justify-center"
+                    className="p-2 bg-[#006de3] text-white hover:bg-blue-700 rounded font-medium flex items-center gap-x-2 transition-colors w-full justify-center"
                 >
-                    Sign In
+                    Sign in
                 </button>
 
-                <p className="text-gray-400 mt-6">
+                <p className="text-gray-400 mt-6 text-sm">
                     Don't have an account?{' '}
                     <Link
                         to={`/${PublicRoutes.SIGNUP}`}

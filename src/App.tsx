@@ -3,6 +3,7 @@ import { AppRouter } from './route';
 import { supabase } from './supabase';
 import useAuthStore from './store/auth';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 
 export const App = () => {
     const setUserSession = useAuthStore((state) => state.setUserSession);
@@ -20,6 +21,7 @@ export const App = () => {
     }, [setUserSession]);
     return (
         <QueryClientProvider client={queryClient}>
+            <Toaster position="top-right" richColors />
             <AppRouter />
         </QueryClientProvider>
     );

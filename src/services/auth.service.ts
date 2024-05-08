@@ -19,9 +19,31 @@ export const handleSignOut = async () => {
     }
 };
 
+export const consultEmail = async (email: string) => {
+    try {
+        const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+        .single();
+
+        if (error) {
+            if (error.code === 'PGRST116') {
+                return { userNotFound: true };
+            } else {
+                throw error;
+            }
+        }
+        return data;
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        throw error;
+      }
+}
+
 export const signUpNewUser = async (form: RegisterFrom) => {
     const { email, password, first_name, last_name } = form;
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -32,9 +54,9 @@ export const signUpNewUser = async (form: RegisterFrom) => {
         },
     });
     if (error) {
-        console.error('Error: ', error.message);
+        return false;
     }
-    return data;
+    return true;
 }
 
 export const signInUser = async (form: LoginFrom) => {
@@ -49,9 +71,28 @@ export const signInUser = async (form: LoginFrom) => {
     console.log(data);
 }
 
+export const forgotPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email,  {
+        redirectTo: 'http://localhost:5173/reset-password',
+    });
+    if (error) {
+        return error.message;
+    }
+}
+
+export const resetPassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+        return false;
+    }  
+    return true;
+}
+
 export const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
         console.error('Error: ', error.message);
     }
-  }
+}
+
+// axios instance

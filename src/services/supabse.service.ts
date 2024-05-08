@@ -1,6 +1,7 @@
 import { supabase } from "../supabase";
 import { Task, TaskEdit } from "../types";
 
+
 export const getUserTasks = async (userId: string | undefined) => {
         const { data, error } = await supabase.from('tasks').select('*').eq('user_id', userId).order('id', { ascending: true });
         if (error) {
