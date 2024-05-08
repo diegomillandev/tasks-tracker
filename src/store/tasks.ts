@@ -15,6 +15,7 @@ const taskState: TaskEdit = {
     timer: 0,
     done: false,
     user_id: '',
+    scheduled_date: '',
 };
 
 export const useTaskStore = create<TaskStore>((set) => ({
