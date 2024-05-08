@@ -1,8 +1,8 @@
-import { BiTask } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/auth';
 import { signOut } from '../services/auth.service';
 import { UserInfo } from '../types';
+import { BiTask } from 'react-icons/bi';
 
 export const NavbarHeader = () => {
     const [userSession] = useAuthStore((state) => [state.userSession]);
@@ -14,11 +14,10 @@ export const NavbarHeader = () => {
     };
 
     const user: UserInfo = userSession?.user.user_metadata as UserInfo;
-    console.log(user);
     return (
         <div className="bg-[#1e2a36] text-white flex py-2 justify-between px-6 sticky top-0 z-50 border-b border-gray-700">
             <div className="flex items-center select-none">
-                <BiTask className="text-4xl" />
+                <BiTask className="text-4xl text-gray-200" />
                 <h1 className="text-3xl font-medium">TaskTracker</h1>
             </div>
 

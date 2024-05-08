@@ -13,6 +13,7 @@ export interface TaskEdit {
     timer: number;
     title: string;
     user_id: string;
+    scheduled_date: string;
 }
 export interface TaskItem extends Task {
     id: number;

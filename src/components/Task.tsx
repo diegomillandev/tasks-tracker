@@ -15,7 +15,7 @@ export const Task = ({ task }: { task: TaskEdit }) => {
 
     useEffect(() => {
         setTimer(task.timer);
-    }, [task]);
+    }, []);
 
     useEffect(() => {
         let interval: number | undefined;

@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserTasks } from '../services/supabse.service';
 import { useCalendarStore } from '../store/calendar';
 import { TaskEdit } from '../types';
+import dayjs from 'dayjs';
 
 export const TasksList = () => {
     const [timeTotal, setTimeTotal] = useState(0);
@@ -25,12 +26,11 @@ export const TasksList = () => {
 
     const filterTasks = useMemo(() => {
         return listTasks?.filter((task) => {
-            const createdAt = new Date(task.created_at);
-            return (
-                createdAt.getDate() === selectedDate.date() &&
-                createdAt.getMonth() === selectedDate.month() &&
-                createdAt.getFullYear() === selectedDate.year()
+            const scheduled_date = dayjs(task.scheduled_date).format(
+                'YYYY-MM-DD'
             );
+            const selected_date = dayjs(selectedDate).format('YYYY-MM-DD');
+            return scheduled_date === selected_date;
         });
     }, [listTasks, selectedDate]);
 
@@ -91,10 +91,10 @@ export const TasksList = () => {
             </div>
             <ul className="space-y-2 h-[620px] overflow-y-auto no-scrollbar">
                 {isLoading && <LoadingTasks />}
-                {filterTasks?.length !== 0 ? (
-                    filterTasks?.map((task) => {
-                        return <Task key={task.id} task={task} />;
-                    })
+                {filterTasks?.length > 0 ? (
+                    filterTasks?.map((task) => (
+                        <Task key={task.id} task={task} />
+                    ))
                 ) : (
                     <div
                         className="w-4/6 md:w-2/3 lg:w-3/6 md:max-w-56 mx-auto flex items-center p-4 mb-4 text-md text-blue-800 rounded-lg bg-blue-50 dark:bg-[#005ad1] dark:text-white"

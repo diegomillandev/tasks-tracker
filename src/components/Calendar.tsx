@@ -35,7 +35,10 @@ export const Calendar = () => {
                     />
                     <p
                         className="cursor-pointer capitalize text-lg"
-                        onClick={() => setSelectedDate(currentDate)}
+                        onClick={() => {
+                            setSelectedDate(currentDate);
+                            setToday(currentDate);
+                        }}
                     >
                         today
                     </p>
