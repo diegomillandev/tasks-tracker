@@ -47,7 +47,7 @@ export const ResetPassword = () => {
                     className="bg-gray-800 p-8 w-11/12 max-w-[450px] rounded-md border border-gray-700"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <h2 className="text-xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                    <h2 className="text-4xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         TaskTracker
                         <span className="block text-lg font-extralight">
                             Update your password

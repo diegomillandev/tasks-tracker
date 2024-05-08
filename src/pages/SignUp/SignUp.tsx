@@ -41,7 +41,7 @@ export const SignUp = () => {
     return (
         <div className="flex pt-10 md:pt-24 pb-10 md:pb-0 items-center min-h-screen flex-col">
             <div className="bg-gray-800 p-8 w-11/12 max-w-[450px] rounded-md border border-gray-700">
-                <h2 className="text-xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                <h2 className="text-4xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                     TaskTracker
                     <span className="block text-lg font-extralight">
                         Create an account

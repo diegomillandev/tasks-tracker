@@ -38,7 +38,7 @@ export const Login = () => {
                 autoComplete="off"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <h2 className="text-xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                <h2 className="text-4xl text-center md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                     TaskTracker
                     <span className="block text-lg font-extralight">
                         Sign in
