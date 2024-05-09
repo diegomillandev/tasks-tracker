@@ -24,8 +24,9 @@ export const SignUp = () => {
         setLoading(true);
 
         const emailExist = await consultEmail(data.email);
-        if (emailExist) {
-            toast.error('Email already exists');
+
+        if (emailExist.userNotFound) {
+            toast.error('Email not found, please try again.');
             setLoading(false);
             return;
         }
