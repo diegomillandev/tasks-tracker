@@ -31,15 +31,16 @@ export const SignUp = () => {
             setLoading(false);
             return;
         }
+
         const result = await signUpNewUser(data);
         if (result) {
             toast.success('Account created successfully');
             navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
+            setAccountCreated(true);
             return;
         }
         toast.error('Error creating account');
         setLoading(false);
-        setAccountCreated(true);
     };
     return (
         <div className="flex pt-10 md:pt-24 pb-10 md:pb-0 items-center min-h-screen flex-col">
