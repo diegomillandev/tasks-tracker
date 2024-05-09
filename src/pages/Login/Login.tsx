@@ -7,6 +7,7 @@ import { MessageInputsError } from '../../components';
 import { LoginFrom } from '../../types';
 import { signInUser } from '../../services/auth.service';
 import { supabase } from '../../supabase';
+import { toast } from 'sonner';
 
 export const Login = () => {
     const { showPassword, toggleShowPassword } = useShowPassword();
@@ -27,7 +28,7 @@ export const Login = () => {
                 navigate('/', { replace: true });
             }
         } catch (error) {
-            console.error('Error: ', error);
+            toast.error('Error signing in, try again later');
         }
     };
 

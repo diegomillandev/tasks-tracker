@@ -52,13 +52,24 @@ export const NavbarHeader = () => {
                         <li>
                             <Link
                                 to={'/'}
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white w-full text-left"
                             >
                                 Tasks
                             </Link>
                         </li>
                     </ul>
-                    <hr className="bg-gray-700" />
+
+                    <ul className="text-sm text-gray-700 dark:text-gray-400 group">
+                        <li>
+                            <div className="block px-4 py-2 text-sm  text-gray-200 hover:text-white w-full text-left cursor-not-allowed">
+                                Profile
+                                <span className="text-xs text-gray-600 group-hover:text-gray-400 ps-1">
+                                    soon
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+
                     <div className="">
                         <button
                             className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white w-full text-left"
@@ -67,6 +78,16 @@ export const NavbarHeader = () => {
                             Logout
                         </button>
                     </div>
+                    <hr className="bg-gray-700" />
+                    <footer className="block px-4 py-2 text-xs text-gray-500 text-center ">
+                        <p>TaskTracker 0.0.2</p>
+                        <Link
+                            to={'https://github.com/diegomillandev'}
+                            target="_blank"
+                        >
+                            <p>Developed by Diego Millan</p>
+                        </Link>
+                    </footer>
                 </div>
             </div>
         </div>
