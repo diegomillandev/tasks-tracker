@@ -26,6 +26,8 @@ export const Login = () => {
             } = await supabase.auth.getSession();
             if (token) {
                 navigate('/', { replace: true });
+            } else {
+                toast.error('Email or password is incorrect');
             }
         } catch (error) {
             toast.error('Error signing in, try again later');
