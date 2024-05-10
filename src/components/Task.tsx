@@ -147,7 +147,7 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                 </div>
             </header>
             <p className="text-gray-500 font-light mt-4">{task.description}</p>
-            <div className="mt-3 flex items-center justify-between">
+            <div className="mt-3 flex flex-col md:flex-row items-center justify-between">
                 <p className="text-gray-400 bg-transparent">
                     <span>
                         {('0' + Math.floor((timer / 3600000) % 24)).slice(-2)}
@@ -165,7 +165,7 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                         {('0' + Math.floor((timer / 10) % 100)).slice(-2)}
                     </span>
                 </p>
-                <div className="flex gap-3">
+                <div className="flex gap-3 mt-6 md:mt-0">
                     <button
                         className={`${
                             isRunning
