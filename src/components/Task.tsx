@@ -3,9 +3,14 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { GrMore } from 'react-icons/gr';
 import { TaskEdit } from '../types/index';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteTask, updateTaskTimer } from '../services/supabse.service';
+import {
+    completeTask,
+    deleteTask,
+    updateTaskTimer,
+} from '../services/supabse.service';
 import { useTaskStore } from '../store/tasks';
 import { useEventStore } from '../store/events';
+import { toast } from 'sonner';
 
 export const Task = ({ task }: { task: TaskEdit }) => {
     const [setShowModal] = useEventStore((state) => [state.setShowModal]);
@@ -52,6 +57,14 @@ export const Task = ({ task }: { task: TaskEdit }) => {
         },
     });
 
+    const mutationComplete = useMutation({
+        mutationFn: completeTask,
+        onError: () => {},
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+        },
+    });
+
     const handleDelete = () => {
         mutationDelete.mutate(+task.id);
     };
@@ -71,6 +84,24 @@ export const Task = ({ task }: { task: TaskEdit }) => {
         });
     };
 
+    const handleResetTimer = () => {
+        setTimer(0);
+        if (isRunning) {
+            setIsRunning(false);
+        }
+        mutationTimer.mutate({
+            id: +task.id,
+            timer: 0,
+            user_id: task.user_id,
+        });
+    };
+
+    const handleCompleteTask = async () => {
+        if (task.done) return;
+
+        await mutationComplete.mutate(+task.id);
+        toast.success('Task completed');
+    };
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
             if (isRunning) {
@@ -85,7 +116,10 @@ export const Task = ({ task }: { task: TaskEdit }) => {
         };
     }, [isRunning]);
     return (
-        <li className="border relative rounded shadow bg-gray-800 border-gray-700 p-4">
+        <li
+            className={`border relative rounded shadow bg-gray-800 border-gray-700 p-4
+        `}
+        >
             <header>
                 <p className="text-white text-xl font-normal capitalize">
                     {task.title}
@@ -114,7 +148,7 @@ export const Task = ({ task }: { task: TaskEdit }) => {
             </header>
             <p className="text-gray-500 font-light mt-4">{task.description}</p>
             <div className="mt-3 flex items-center justify-between">
-                <p className="text-gray-400">
+                <p className="text-gray-400 bg-transparent">
                     <span>
                         {('0' + Math.floor((timer / 3600000) % 24)).slice(-2)}
                     </span>
@@ -137,10 +171,30 @@ export const Task = ({ task }: { task: TaskEdit }) => {
                             isRunning
                                 ? 'bg-red-600 hover:bg-red-700'
                                 : 'bg-blue-600 hover:bg-blue-700'
-                        } rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
+                        } 
+                        ${task.done ? 'hidden' : 'block'}
+                        rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white`}
                         onClick={handleTimer}
                     >
                         {isRunning ? 'Stop' : 'Start'}
+                    </button>
+
+                    <button
+                        className={`bg-gray-600 hover:bg-gray-700 rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white
+                            ${task.done ? 'hidden' : 'block'}
+                        `}
+                        onClick={handleResetTimer}
+                    >
+                        Reset
+                    </button>
+                    <button
+                        className="bg-green-700 hover:bg-green-800 rounded font-medium flex items-center gap-x-2 transition-colors px-3 py-1 text-white
+                            disabled:bg-gray-600 disabled:cursor-not-allowed
+                        "
+                        onClick={handleCompleteTask}
+                        disabled={task.done}
+                    >
+                        {task.done ? 'Completed' : 'done'}
                     </button>
                 </div>
             </div>
