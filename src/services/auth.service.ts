@@ -35,10 +35,6 @@ export const consultEmail = async (email: string) => {
             }
         }
 
-        if(!data){
-            return { userNotFound: true };
-        }
-
         return data;
       } catch (error) {
         console.error('Error fetching user:', error);
